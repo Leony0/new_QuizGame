@@ -7,6 +7,7 @@ conn = sqlite3.connect('test.db')
 # カーソルを取得してクエリを実行
 cursor = conn.cursor()
 cursor.execute("SELECT * FROM question;")
+cursor.execute("SELECT * FROM choice;")
 
 # 結果を取得して表示
 rows = cursor.fetchall()
