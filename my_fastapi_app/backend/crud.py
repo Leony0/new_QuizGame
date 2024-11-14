@@ -22,20 +22,16 @@ def get_choice(db: Session, choice_id: int):
 
 def create_question(db: Session, question: schemas.QuestionCreate):
     #fake_hashed_password = question.password + "notreallyhashed"
-    db_user = models.User(q_content=question.q_content)
-    db.add(db_user)
+    db_question = models.User(q_content=question.q_content)
+    db.add(db_question)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(db_question)
+    return db_question
+ 
 
-
-def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
-
-
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
-    db.add(db_item)
+def create_choice(db: Session, choice: schemas.ChoiceCreate, question_id: int):
+    db_choice= models.Choice(choice, owner_id=question_id)
+    db.add(db_choice)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_choice)
+    return db_choice
