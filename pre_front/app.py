@@ -5,8 +5,12 @@ import os
 
 app = FastAPI()
 
-# 静的ファイル (auth.js) を提供する
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# 現在のディレクトリを基準にして相対パスを設定
+current_dir = os.path.dirname(os.path.abspath(__file__))
+static_dir = os.path.join(current_dir, "static")
+
+# 静的ファイルを提供する
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # フォームの表示 (GET)
 @app.get("/", response_class=HTMLResponse)
